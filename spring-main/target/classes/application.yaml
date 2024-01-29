@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: medical-api
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+    spring:
+      h2:
+        console:
+          enabled: true
+  datasource:
+    url: jdbc:h2:mem:medical
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yaml
+    enabled: true
+  h2:
+    console:
+      enabled: true
+jwt:
+  secret:
+    key: 0cO07vQyKtT/sBFSAOl7rIWAfaJah//ikKrbP0lLmLQ=
+openai:
+      model: gpt-3.5-turbo
+      api:
+        key: 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
+        url: https://api.openai.com/v1/chat/completions

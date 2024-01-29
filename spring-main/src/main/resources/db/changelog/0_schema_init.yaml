@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202310112129-init
+      author: admin
+      changes:
+        - createTable:
+            tableName: _user
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(1024)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(256)
+              - column:
+                  name: role
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
