@@ -26,5 +26,5 @@ jwt:
 openai:
       model: gpt-3.5-turbo
       api:
-        key: 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
+        key: somekeyy
         url: https://api.openai.com/v1/chat/completions
