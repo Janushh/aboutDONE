@@ -1,5 +1,5 @@
 databaseChangeLog:
    - include:
-       file: 0_schema_init.yaml
+       file: user_query.yaml
        relativeToChangelogFile: true
 

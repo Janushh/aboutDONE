@@ -10,8 +10,8 @@ public class UserQuery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "userid")
+    private Integer userid;
 
     @Lob
     @Column(name = "question")
@@ -26,8 +26,8 @@ public class UserQuery {
 
 
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public void setQuestion(String question) {
@@ -52,10 +52,6 @@ public class UserQuery {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
 

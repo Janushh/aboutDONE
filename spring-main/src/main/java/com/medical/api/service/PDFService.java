@@ -8,4 +8,5 @@ public interface PDFService {
     byte[] generatePdfFromPrompt(String prompt) throws DocumentException;
     byte[] generatePdfFromText(String text) throws DocumentException;
     byte[] generatePdfReportForUser(List<UserQuery> queries) throws DocumentException;
+
 }

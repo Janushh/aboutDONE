@@ -2,6 +2,7 @@ package com.medical.api.controller;
 
 
 import com.itextpdf.text.DocumentException;
+import com.medical.api.entities.UserQuery;
 import com.medical.api.service.PDFService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -32,5 +35,6 @@ public class PDFController {
         headers.setContentDispositionFormData("filename", "chat-response.pdf");
 
         return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
+
     }
 }

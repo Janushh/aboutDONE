@@ -10,6 +10,7 @@ import com.medical.api.service.PDFService;
 import com.medical.api.service.QueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class QueryServiceImpl implements QueryService {
     private final PDFService pdfService;
 
     @Override
-    public ResponseEntity<byte[]> processAskQuestion(String username, String question) throws DocumentException {
+    public ResponseEntity<byte[]> processAskQuestion(Integer userid, String question) throws DocumentException {
         ChatGptRequest request = new ChatGptRequest(GPT_MODEL, question);
         ChatGptResponse chatGptResponse = openAIService.sendRequest(request);
 
@@ -40,7 +41,7 @@ public class QueryServiceImpl implements QueryService {
         }
         String answer = chatGptResponse.getChoices().get(0).getMessage().getContent();
         UserQuery userQuery = new UserQuery();
-        userQuery.setUsername(username);
+        userQuery.setUserid(userid);
         userQuery.setQuestion(question);
         userQuery.setAnswer(answer);
         userQuery.setTimestamp(LocalDateTime.now());
@@ -59,18 +60,32 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public ResponseEntity<byte[]> processGenerateReportForUser(String username) throws DocumentException {
-        List<UserQuery> queries = userQueryRepository.findByUsername(username);
+    public ResponseEntity<byte[]> processGenerateReportForUser(Integer userid) throws DocumentException {
+        List<UserQuery> queries = userQueryRepository.findByUserid(userid);
         byte[] pdfContent = pdfService.generatePdfReportForUser(queries);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("filename", "user_report_" + username + ".pdf");
+        headers.setContentDispositionFormData("filename", "user_report_" + userid + ".pdf");
 
         return ResponseEntity
                 .ok()
                 .headers(headers)
                 .body(pdfContent);
+    }
+    @Override
+    public ResponseEntity<byte[]> getAllQueriesAsPdfResponse() {
+        try {
+            byte[] pdfContent = pdfService.generatePdfReportForUser(userQueryRepository.findAll());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("filename", "all_queries.pdf");
+
+            return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
+        } catch (DocumentException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
