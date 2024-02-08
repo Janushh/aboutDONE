@@ -3,6 +3,7 @@ package com.medical.api.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+
 @Entity
 public class UserQuery {
 

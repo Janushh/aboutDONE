@@ -21,11 +21,11 @@ public class QueryController {
 
     @GetMapping("/user/{userid}")
     public ResponseEntity<byte[]> generateReportForUser(@PathVariable Integer userid) throws DocumentException {
-        return queryService.processGenerateReportForUser(userid);
+        return ResponseEntity.ok(queryService.processGenerateReportForUser(userid));
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<byte[]> getAllQueriesAsPdf() throws DocumentException {
-        return queryService.getAllQueriesAsPdfResponse();
+    public ResponseEntity<byte[]> getAllQueriesAsPdf() {
+        return ResponseEntity.ok(queryService.getAllQueriesAsPdfResponse());
     }
 }
