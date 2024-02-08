@@ -27,8 +27,3 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }
-
-//1. Usunąć throw w kontrolerach
-//2. Usunąć Response Entities w Service
-//3. Napisać ApplicationException, EmptyResponseException, PdfGenerationEXception
-//4. DRY - do not repeat yourself
