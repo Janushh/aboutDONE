@@ -10,7 +10,8 @@ spring:
         console:
           enabled: true
   datasource:
-    url: jdbc:h2:file:D:\database\saves;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:medical
+#    jdbc:h2:file:D:\database\saves;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password:

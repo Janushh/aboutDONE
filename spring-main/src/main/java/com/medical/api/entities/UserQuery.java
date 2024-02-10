@@ -1,8 +1,11 @@
 package com.medical.api.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+
+@Data
 @Entity
 public class UserQuery {
 
@@ -23,37 +26,4 @@ public class UserQuery {
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
-
-
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-
-
 }
