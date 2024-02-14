@@ -1,10 +1,10 @@
 package com.medical.api.controller;
 
-import com.itextpdf.text.DocumentException;
 import com.medical.api.service.QueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RequiredArgsConstructor
@@ -15,17 +15,17 @@ public class QueryController {
     private final QueryService queryService;
 
     @PostMapping("/ask")
-    public ResponseEntity<byte[]> askQuestion(@RequestParam Integer userid, @RequestParam String question) throws DocumentException {
+    public byte[] askQuestion(@RequestParam Integer userid, @RequestParam String question){
         return queryService.processAskQuestion(userid, question);
     }
 
     @GetMapping("/user/{userid}")
-    public ResponseEntity<byte[]> generateReportForUser(@PathVariable Integer userid) throws DocumentException {
-        return queryService.processGenerateReportForUser(userid);
+    public ResponseEntity<byte[]> generateReportForUser(@PathVariable Integer userid){
+        return ResponseEntity.ok(queryService.processGenerateReportForUser(userid));
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<byte[]> getAllQueriesAsPdf() throws DocumentException {
-        return queryService.getAllQueriesAsPdfResponse();
+    public ResponseEntity<byte[]> getAllQueriesAsPdf() {
+        return ResponseEntity.ok(queryService.getAllQueriesAsPdfResponse());
     }
 }
