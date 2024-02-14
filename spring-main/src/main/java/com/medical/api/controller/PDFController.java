@@ -28,7 +28,7 @@ public class PDFController {
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("filename", "chat-response.pdf");
 
-        return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
+        return ResponseEntity.ok(pdfContent);
     }
 }
 

@@ -3,13 +3,12 @@ package com.medical.api.service.impl;
 import com.medical.api.dto.ChatGptRequest;
 import com.medical.api.dto.ChatGptResponse;
 import com.medical.api.entities.UserQuery;
+import com.medical.api.exception.QueryException;
 import com.medical.api.repository.UserQueryRepository;
 import com.medical.api.service.OpenAIService;
 import com.medical.api.service.PDFService;
 import com.medical.api.service.QueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,24 +47,20 @@ public class QueryServiceImpl implements QueryService {
     public byte[] processGenerateReportForUser(Integer userid) {
         List<UserQuery> queries = userQueryRepository.findByUserid(userid);
         if (queries != null && !queries.isEmpty()) {
-            byte[] pdfContent = pdfService.generatePdfReportForUser(queries);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "user_report_" + userid + ".pdf");
 
-            return pdfContent;
+            return pdfService.generatePdfReportForUser(queries);
         } else {
-            throw new RuntimeException("No queries found for user with ID: " + userid);
+            throw new QueryException();
         }
 
     }
 
     @Override
     public byte[] getAllQueriesAsPdfResponse() {
-        byte[] pdfContent = pdfService.generatePdfReportForUser(userQueryRepository.findAll());
+        pdfService.generatePdfReportForUser(userQueryRepository.findAll());
 
-        return pdfContent;
+        return null;
     }
 
 }

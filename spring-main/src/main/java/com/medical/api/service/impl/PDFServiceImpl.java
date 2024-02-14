@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.medical.api.dto.ChatGptRequest;
 import com.medical.api.dto.ChatGptResponse;
 import com.medical.api.entities.UserQuery;
+import com.medical.api.exception.EmptyResponseException;
 import com.medical.api.exception.PdfGenerationException;
 import com.medical.api.service.OpenAIService;
 import com.medical.api.service.PDFService;
@@ -25,6 +26,10 @@ public class PDFServiceImpl implements PDFService {
     public byte[] generatePdfFromPrompt(String prompt) {
         ChatGptRequest request = new ChatGptRequest(GPT_MODEL, prompt);
         ChatGptResponse chatGptResponse = openAIService.sendRequest(request);
+
+        if (chatGptResponse == null || chatGptResponse.getChoices().isEmpty()) {
+            throw new PdfGenerationException();
+        }
 
         return generatePdfFromText(chatGptResponse.getChoices().get(0).getMessage().getContent());
     }
